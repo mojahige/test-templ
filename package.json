@@ -3,6 +3,7 @@
 	"private": true,
 	"scripts": {
 		"dev:css": "npm run generate:css -- --watch",
+		"minify:css": "npx @tailwindcss/cli -o assets/stylesheets/index.css --minify",
 		"generate:css": "npx @tailwindcss/cli -i ./src/stylesheets/index.css -o ./assets/stylesheets/index.css"
 	},
 	"author": "mojahige (Yu Nozato)",
