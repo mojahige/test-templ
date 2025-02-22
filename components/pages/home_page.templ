@@ -1,0 +1,23 @@
+package pages
+
+import "github.com/mojahige/test-templ/components"
+
+templ HomePage() {
+	@components.Page(components.PageProps{
+		Head:     homePageHead(),
+		Contents: homePageContents(),
+	})
+}
+
+templ homePageHead() {
+	@components.Head() {
+		<title>Home Page</title>
+	}
+}
+
+templ homePageContents() {
+	<main>
+		<h1>Welcome</h1>
+		@components.Hello("World")
+	</main>
+}

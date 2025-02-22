@@ -1,0 +1,17 @@
+package components
+
+type PageProps struct {
+	Head     templ.Component
+	Contents templ.Component
+}
+
+templ Page(props PageProps) {
+	<html lang="en">
+		<head>
+			@props.Head
+		</head>
+		<body>
+			@props.Contents
+		</body>
+	</html>
+}

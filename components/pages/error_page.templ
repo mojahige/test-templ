@@ -1,0 +1,28 @@
+package pages
+
+import "github.com/mojahige/test-templ/components"
+
+type ErrorPageProps struct {
+	ErrorCode string
+	Message   string
+}
+
+templ ErrorPage(props ErrorPageProps) {
+	@components.Page(components.PageProps{
+		Head:     errorPageHead(props.ErrorCode),
+		Contents: errorPageContents(props),
+	})
+}
+
+templ errorPageHead(title string) {
+	@components.Head() {
+		<title>{ title }</title>
+	}
+}
+
+templ errorPageContents(props ErrorPageProps) {
+	<main>
+		<h1>{ props.ErrorCode }</h1>
+		<p>💀 { props.Message }</p>
+	</main>
+}
