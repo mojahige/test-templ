@@ -1,0 +1,23 @@
+package blocks
+
+import "strconv"
+
+
+type PostProps struct {
+	ID        int
+	Title     string
+	Body      string
+	CreatedAt string
+	UpdatedAt *string
+}
+
+templ Post(props PostProps) {
+	<div data-id={ strconv.Itoa(props.ID) }>
+		<p>{ props.Title }</p>
+		<p>{ props.Body }</p>
+		<p>{ props.CreatedAt }</p>
+		if props.UpdatedAt != nil {
+			<div>{ *props.UpdatedAt }</div>
+		}
+	</div>
+}

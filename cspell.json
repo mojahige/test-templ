@@ -3,7 +3,13 @@
 	"ignorePaths": [],
 	"dictionaryDefinitions": [],
 	"dictionaries": [],
-	"words": ["labstack", "mojahige", "templ"],
+	"words": [
+		"AUTOINCREMENT",
+		"labstack",
+		"mattn",
+		"mojahige",
+		"templ"
+	],
 	"ignoreWords": [],
 	"import": []
 }

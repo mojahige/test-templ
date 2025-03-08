@@ -5,9 +5,15 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/mojahige/test-templ/components/pages"
-	"github.com/mojahige/test-templ/render"
+	"github.com/mojahige/test-templ/response"
 )
 
-func HomeHandler(c echo.Context) error {
-	return render.Component(c, http.StatusOK, pages.HomePage())
+type HomeHandler struct{}
+
+func NewHomeHandler() *HomeHandler {
+	return &HomeHandler{}
+}
+
+func (h *HomeHandler) Get(c echo.Context) error {
+	return response.HTML(c, http.StatusOK, pages.HomePage())
 }

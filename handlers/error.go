@@ -6,10 +6,16 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/mojahige/test-templ/components/pages"
-	"github.com/mojahige/test-templ/render"
+	"github.com/mojahige/test-templ/response"
 )
 
-func ErrorHandler(err error, c echo.Context) {
+type ErrorHandler struct{}
+
+func NewErrorHandler() *ErrorHandler {
+	return &ErrorHandler{}
+}
+
+func (h *ErrorHandler) Handle(err error, c echo.Context) {
 	if c.Response().Committed {
 		return
 	}
@@ -18,7 +24,8 @@ func ErrorHandler(err error, c echo.Context) {
 
 	if he, ok := err.(*echo.HTTPError); ok {
 		message := fmt.Sprintf("%v", he.Message)
-		render.Component(c, he.Code, pages.ErrorPage(pages.ErrorPageProps{
+
+		response.HTML(c, he.Code, pages.ErrorPage(pages.ErrorPageProps{
 			ErrorCode: strconv.Itoa(he.Code),
 			Message:   message,
 		}))

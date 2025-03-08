@@ -12,7 +12,14 @@ func SetupRoutes(e *echo.Echo) {
 }
 
 func setupWebRoutes(e *echo.Echo) {
-	e.GET("/", handlers.HomeHandler)
+	homeHandler := handlers.NewHomeHandler()
+	postsHandler := handlers.NewPostsHandler()
+
+	e.GET("/", homeHandler.Get)
+	e.GET("/posts", postsHandler.Get)
+	e.POST("/posts", postsHandler.Post)
+	e.PATCH("/posts", postsHandler.Patch)
+	e.DELETE("/posts", postsHandler.Delete)
 }
 
 func setupStaticRoutes(e *echo.Echo) {
@@ -20,5 +27,6 @@ func setupStaticRoutes(e *echo.Echo) {
 }
 
 func setupErrorRoutes(e *echo.Echo) {
-	e.HTTPErrorHandler = handlers.ErrorHandler
+	errorHandler := handlers.NewErrorHandler()
+	e.HTTPErrorHandler = errorHandler.Handle
 }

@@ -1,0 +1,42 @@
+package pages
+
+import (
+	"github.com/mojahige/test-templ/components"
+	"github.com/mojahige/test-templ/components/blocks"
+	"github.com/mojahige/test-templ/db"
+)
+
+templ PostsPage(posts []db.Post) {
+	@components.Page(components.PageProps{
+		Head:     postsPageHead(),
+		Contents: postsPageContents(posts),
+	})
+}
+
+templ postsPageHead() {
+	@components.Head() {
+		<title>Posts Page</title>
+	}
+}
+
+templ postsPageContents(posts []db.Post) {
+	<main>
+		<h1 class="text-3xl font-bold">Posts</h1>
+
+		if len(posts) == 0 {
+			<p>投稿がありません</p>
+		} else {
+			<div>
+				for _, post := range posts {
+					@blocks.Post(blocks.PostProps{
+						ID:        post.ID,
+						Title:     post.Title,
+						Body:      post.Body,
+						CreatedAt: post.CreatedAt,
+						UpdatedAt: post.UpdatedAt,
+					})
+				}
+			</div>
+		}
+	</main>
+}
