@@ -49,6 +49,9 @@ Temporary Items
 go.work
 go.work.sum
 
+# templ
+components/**/*.txt
+
 # env file
 .env
 
