@@ -1,3 +1,8 @@
 {
-  "explorer.fileNesting.enabled": false
+  "explorer.fileNesting.enabled": true,
+	"explorer.fileNesting.expand": false,
+	"explorer.fileNesting.patterns": {
+		"*.templ": "${capture}_templ.go, ${capture}_templ.txt",
+		"package.json": ""
+	}
 }
