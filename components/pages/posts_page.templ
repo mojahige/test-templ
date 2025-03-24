@@ -23,10 +23,15 @@ templ postsPageContents(posts []db.Post) {
 	<main>
 		<h1 class="text-3xl font-bold">Posts</h1>
 
+		@blocks.PostCreateForm(blocks.PostCreateFormProps{
+			Target: ".posts",
+			Swap: "afterbegin",
+		})
+
 		if len(posts) == 0 {
 			<p>投稿がありません</p>
 		} else {
-			<div>
+			<div class="posts">
 				for _, post := range posts {
 					@blocks.Post(blocks.PostProps{
 						ID:        post.ID,

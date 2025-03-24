@@ -1,0 +1,34 @@
+package blocks
+
+type PostCreateFormProps struct {
+	Target  string
+	Swap    string
+}
+
+templ PostCreateForm(props PostCreateFormProps) {
+	<form
+		class="grid gap-5"
+		fx-action="/posts"
+		fx-method="post"
+		if props.Target != "" {
+      fx-target={ props.Target }
+    }
+		if props.Swap != "" {
+      fx-swap={ props.Swap }
+    }
+	>
+		<label class="grid gap-1">
+			Title
+			<input class="input validator w-full" type="text" name="title" required>
+		</label>
+
+		<label class="grid gap-1">
+			Body
+			<textarea class="textarea validator w-full" name="body" required></textarea>
+		</label>
+
+		<div class="text-center">
+			<button class="btn btn-primary">submit</button>
+		</div>
+	</form>
+}

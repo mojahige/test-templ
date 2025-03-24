@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
+	"github.com/mojahige/test-templ/components/blocks"
 	"github.com/mojahige/test-templ/components/pages"
 	"github.com/mojahige/test-templ/response"
 	"github.com/mojahige/test-templ/services"
@@ -30,8 +31,8 @@ func (h *PostsHandler) Get(c echo.Context) error {
 
 func (h *PostsHandler) Post(c echo.Context) error {
 	var requestBody struct {
-		Title string `json:"title" validate:"required,min=3,max=100"`
-		Body  string `json:"body" validate:"required,min=10"`
+		Title string `form:"title" validate:"required,min=3,max=100"`
+		Body  string `form:"body" validate:"required,min=10"`
 	}
 
 	if err := c.Bind(&requestBody); err != nil {
@@ -60,10 +61,21 @@ func (h *PostsHandler) Post(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusCreated, map[string]interface{}{
-		"id":      id,
-		"message": "投稿が作成されました",
-	})
+	post, err := services.GetPost(int(id))
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": "作成後のデータ取得に失敗しました",
+		})
+	}
+
+	return response.HTML(c, http.StatusOK, blocks.Post(blocks.PostProps{
+		ID:        post.ID,
+		Title:     post.Title,
+		Body:      post.Body,
+		CreatedAt: post.CreatedAt,
+		UpdatedAt: post.UpdatedAt,
+	}))
 }
 
 func (h *PostsHandler) Patch(c echo.Context) error {
@@ -99,14 +111,21 @@ func (h *PostsHandler) Patch(c echo.Context) error {
 		})
 	}
 
-	updatedPost, err := services.GetPost(requestBody.Id)
+	post, err := services.GetPost(requestBody.Id)
+
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"error": "更新後のデータ取得に失敗しました",
 		})
 	}
 
-	return c.JSON(http.StatusOK, updatedPost)
+	return response.HTML(c, http.StatusOK, blocks.Post(blocks.PostProps{
+		ID:        post.ID,
+		Title:     post.Title,
+		Body:      post.Body,
+		CreatedAt: post.CreatedAt,
+		UpdatedAt: post.UpdatedAt,
+	}))
 }
 
 func (h *PostsHandler) Delete(c echo.Context) error {
